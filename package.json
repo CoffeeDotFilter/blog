@@ -6,7 +6,8 @@
   "scripts": {
     "test": "tape ./tests/*",
     "start": "nodemon server.js",
-    "sass": "sass --watch public/scss/style.scss:public/style.css"
+    "sass": "sass --watch public/scss/style.scss:public/style.css",
+    "coverage": "istanbul cover tape ./tests/* && ./node_modules/.bin/codecov"
   },
   "repository": {
     "type": "git",
@@ -19,6 +20,7 @@
   },
   "homepage": "https://github.com/CoffeeDotFilter/blog#readme",
   "devDependencies": {
+    "istanbul": "^0.4.2",
     "nodemon": "^1.9.1",
     "tape": "^4.4.0"
   },

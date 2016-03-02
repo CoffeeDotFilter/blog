@@ -22,8 +22,10 @@ const plugins = [
 
 server.register(plugins, (err) => {
 
+  if(err) console.log(err);
+
 	server.auth.strategy('simple', 'basic', { 
-		validateFunc: auth.validate,
+		validateFunc: auth.validate
 	});
 
 	server.views({

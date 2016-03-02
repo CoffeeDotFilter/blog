@@ -36,7 +36,7 @@ function getOnePost(postName, callback) {
 		if(err) {
 			console.log(err);
 		} else {
-			callback(reply);
+			return callback(reply);
 		}
 	});
 }
@@ -46,7 +46,7 @@ function get10Posts(callback) {
 		if (error) {
 			console.log(error);
 		} else {
-			callback(reply);
+			return callback(reply);
 		}
 	});
 }
