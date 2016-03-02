@@ -2,11 +2,11 @@ var redis = require('redis');
 var client = redis.createClient();
 
 var myPostObject = {
-	body: 'LOrem Ipsum is bullshit', 
+	body: 'LOrem Ipsum is great', 
 	date: Date.now(),
-	author: 'Andrew',
-	picture: 'https://avatars0.githubusercontent.com/u/13705650?v=3&s=40',
-	title: 'Our first post',
+	author: 'Owen',
+	picture: 'https://google.com.githubusercontent.com/u/13705650?v=3&s=40',
+	title: 'Our 5th post',
 	comments: 'comments' + this.date
 };
 
@@ -24,23 +24,14 @@ var myCommentObj2 = {
 
 function addPostToDB(postObject){
 	var postName = 'post' + postObject.date;
-	client.HSET(postName, 'body', postObject.body, function(err, reply) {
-		if(err) console.log(err);
-	});
-	client.HSET(postName, 'date', postObject.date, function(err, reply) {
-		if(err) console.log(err);
-	});
-	client.HSET(postName, 'author', postObject.author, function(err, reply) {
-		if(err) console.log(err);
-	});
-	client.HSET(postName, 'picture', postObject.picture, function(err, reply) {
-		if(err) console.log(err);
-	});
-	client.HSET(postName, 'title', postObject.title, function(err, reply) {
-		if(err) console.log(err);
-	});
-	client.HSET(postName, 'comments', 'comments' + postObject.date, function(err, reply) {
-		if(err) console.log(err);
+	client.HMSET(postName, 	'body', postObject.body, 
+							'date', postObject.date,
+							'author', postObject.author,
+							'picture', postObject.picture,
+							'title', postObject.title,
+							'comments', 'comments' + postObject.date,
+		function(err, reply) {
+			if(err) console.log(err);
 	});
 	client.ZADD('posts', postObject.date, postName, function(error, reply) {
 		if (error) {
@@ -78,7 +69,6 @@ function get10Posts(callback) {
 		if (error) {
 			console.log(error);
 		} else {
-			
 			callback(reply);
 		}
 	});
