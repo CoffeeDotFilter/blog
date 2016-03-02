@@ -9,9 +9,10 @@ const Bcrypt = require('bcrypt');
 const Basic = require('hapi-auth-basic');
 const auth = require('./auth.js');
 const redisFunctions = require('./redisFunctions.js');
+const port = process.env.PORT || 3000;
 
 server.connection({
-  port: 3000
+  port: port
 });
 
 const plugins = [
