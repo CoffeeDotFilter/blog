@@ -10,13 +10,31 @@ server.connection({
   port: 3000
 });
 
-server.route({
-  method: 'GET',
-  path: '/',
-  handler: (request, reply) => {
-    reply('hello CoffeeDotFilter blog!');
-  }
+const plugins = [
+	Inert,
+	Vision,
+	Handlebars
+];
+
+server.register([Vision, Inert], (err) => {
+	
+	server.views({
+		engines: {html: Handlebars},
+		relativeTo: __dirname,
+		path: 'views',
+		layout: 'default',
+		layoutPath: 'views/layout'
+	});
+	
+	server.route({
+	  method: 'GET',
+	  path: '/',
+	  handler: (request, reply) => {
+	    reply.view('home');
+	  }
+	});
 });
+
 
 server.start(err => {
   if (err) throw err;
