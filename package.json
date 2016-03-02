@@ -19,18 +19,17 @@
   },
   "homepage": "https://github.com/CoffeeDotFilter/blog#readme",
   "devDependencies": {
-    "fakeredis": "^1.0.2",
     "nodemon": "^1.9.1",
-    "redis-mock": "^0.5.1",
     "tape": "^4.4.0"
   },
   "dependencies": {
+    "bcrypt": "^0.8.5",
     "handlebars": "^4.0.5",
     "hapi": "^13.0.0",
+    "hapi-auth-basic": "^4.1.0",
     "inert": "^3.2.0",
     "joi": "^8.0.4",
     "redis": "^2.4.2",
-    "vision": "^4.0.1",
-    "wrapping-tape": "0.0.3"
+    "vision": "^4.0.1"
   }
 }

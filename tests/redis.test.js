@@ -3,7 +3,7 @@
 const tape = require('tape');
 const redisFunctions = require('../redisFunctions.js');
 const server = require('../server.js');
-const client = redisFunctions.client;
+var client = redisFunctions.client;
 
 client.select(3, function() {
 	'connected to db3';
@@ -16,7 +16,6 @@ tape('test can write list to db', (t) => {
 	client.LRANGE(listName, 0, -1, (error, reply) => {
 		t.ok(!error, 'assert error is empty');
 		t.deepEqual(reply, array, 'assert arrays match!');
-		client.FLUSHDB();
 		t.end();
 	});
 });
@@ -96,6 +95,21 @@ tape('get10Posts gets 10 posts back', (t) => {
 	});
 });
 
+// Server tests........
+tape('check that server responds', (t) => {
+  server.init.inject({method: 'GET', url: '/'}, (response) => {
+    t.equal(response.statusCode, 200,'Response "200" received from server');
+    t.end();
+  });
+});
+
+tape('check that server returns something for '/' request', (t) => {
+	server.init.inject({method: 'GET', url: '/'}, (response) => {
+		t.ok(response.payload.indexOf('Welcome to Coffee.filter()'), 'server returns index page');
+		t.end();
+	});
+});
+
 tape('teardown', t => {
 	server.init.stop();
 	client.flushdb();
@@ -103,18 +117,3 @@ tape('teardown', t => {
 	t.end();
 });
 
-
-// tests.module1('username and password can be added to db', function(t) {
-// 	var username = 'andrew';
-// 	var password = 12345;
-// 	redisFunctions.addUser(username, password, client);
-// 	var expected = {
-// 		'andrew': '12345'
-// 	};
-// 	client.HGETALL('users', function(error, reply) {
-// 		t.ok(!error, 'assert error is empty');
-// 		t.deepEqual(reply, expected, 'user has been added to db!');
-// 		client.flushdb();
-// 		t.end();
-// 	});
-// });
