@@ -1,4 +1,4 @@
-var redis = require('fakeredis');
+var redis = require('redis');
 var client = redis.createClient();
 
 // var myPostObject = {
