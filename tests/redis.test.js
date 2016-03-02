@@ -1,95 +1,102 @@
-var tape = require('tape');
-var redisFunctions = require('../redisFunctions.js');
-var server = require('../server.js');
-var client = redisFunctions.client;
+"use strict";
+
+const tape = require('tape');
+const redisFunctions = require('../redisFunctions.js');
+const server = require('../server.js');
+const client = redisFunctions.client;
 
 client.select(3, function() {
 	'connected to db3';
 });
 
-tape('test can write list to db', function(t) {
-	var array = ['1', '2', '3', '4', '5'];
-	var listName = 'testList';
+tape('test can write list to db', (t) => {
+	const array = ['1', '2', '3', '4', '5'];
+	const listName = 'testList';
 	client.RPUSH(listName, array);
-	client.LRANGE(listName, 0, -1, function(error, reply) {
+	client.LRANGE(listName, 0, -1, (error, reply) => {
 		t.ok(!error, 'assert error is empty');
 		t.deepEqual(reply, array, 'assert arrays match!');
 		client.FLUSHDB();
 		t.end();
 	});
 });
-//
 
-tape('addPostToDB should store a post object as a hash', function(t) {
-	var myPostObject = {
+tape('addPostToDB should store a post object as a hash', (t) => {
+	const myPostObject = {
 		body: 'LOrem Ipsum is great',
-		date: '12345',
+		date: 12345,
 		author: 'Owen',
 		picture: 'https://google.com.githubusercontent.com/u/13705650?v=3&s=40',
 		title: 'Our 5th post',
 		comments: 'comments' + this.date
 	};
 	redisFunctions.addPostToDB(myPostObject);
-	client.HGET('post12345', 'body', function(error, reply) {
-		if (error) {
-			console.log(error);
-			t.fail('db errored');
-		} else {
-			console.log('success');
-			t.equal(reply, 'LOrem Ipsum is great', 'post object has the correct body');
-		}
+	t.plan(6);
+	client.HGETALL('post12345', (err, reply) => {
+		t.equal(reply.body, 'LOrem Ipsum is great', 'post added with correct body');
+		t.equal(reply.date, '12345', 'post added with correct date');
+		t.equal(reply.author, 'Owen', 'post added with correct author');
+		t.equal(reply.picture, 'https://google.com.githubusercontent.com/u/13705650?v=3&s=40', 'post added with correct picture');
+		t.equal(reply.title, 'Our 5th post', 'post added with correct title');
+		t.equal(reply.comments, 'comments12345', 'post added with correct comments');
 	});
-	client.HGET('post12345', 'date', function(error, reply) {
-		if (error) {
-			console.log(error);
-			t.fail('db errored');
-		} else {
-			console.log('success');
-			t.equal(reply, '12345', 'post object has the correct date');
-		}
-	});
-	client.HGET('post12345', 'author', function(error, reply) {
-		if (error) {
-			console.log(error);
-			t.fail('db errored');
-		} else {
-			console.log('success');
-			t.equal(reply, 'Owen', 'post object has the correct author');
-		}
-	});
-	client.HGET('post12345', 'picture', function(error, reply) {
-		if (error) {
-			console.log(error);
-			t.fail('db errored');
-		} else {
-			console.log('success');
-			t.equal(reply, 'https://google.com.githubusercontent.com/u/13705650?v=3&s=40', 'post object has the correct picture');
-		}
-	});
-	client.HGET('post12345', 'title', function(error, reply) {
-		if (error) {
-			console.log(error);
-			t.fail('db errored');
-		} else {
-			console.log('success');
-			t.equal(reply, 'Our 5th post', 'post object has the correct title');
-		}
-	});
-	client.HGET('post12345', 'comments', function(error, reply) {
-		if (error) {
-			console.log(error);
-			t.fail('db errored');
-		} else {
-			console.log('success');
-			t.equal(reply, 'comments12345', 'post object has the correct comments property');
-		}
-	});
-	client.FLUSHDB();
-	t.end();
 });
 
+tape('addcomment should store a comment in a sorted set', (t) => {
+	const myCommentObj = {
+		body: 'this post is rubbish',
+		date: '54321',
+		author: 'Sohil'
+	};
+	redisFunctions.addComment(myCommentObj, '12345');
+	t.plan(3);
+	client.ZRANGE('comments12345', 0, -1, (err, reply) => {
+		if (err) console.log(err);
+		else {
+			const parsedCommentObj = JSON.parse(reply);
+			t.equal(parsedCommentObj.body, 'this post is rubbish', 'comment has the correct body');
+			t.equal(parsedCommentObj.date, '54321', 'comment has the correct date');
+			t.equal(parsedCommentObj.author, 'Sohil', 'comment has the correct author');
+		}
+	});
+});
 
-tape('teardown', function(t) {
+tape('getOnePost should get a specific post object from the db', (t) => {
+	redisFunctions.getOnePost('post12345', (reply) => {
+		t.equal(reply.body, 'LOrem Ipsum is great', 'post has correct body');
+		t.equal(reply.date, '12345', 'post has correct date');
+		t.equal(reply.author, 'Owen', 'post has correct author');
+		t.equal(reply.picture, 'https://google.com.githubusercontent.com/u/13705650?v=3&s=40', 'post has correct picture');
+		t.equal(reply.title, 'Our 5th post', 'post has correct title');
+		t.equal(reply.comments, 'comments12345', 'post has correct comments');
+		t.end();
+	});
+});
+
+tape('get10Posts gets 10 posts back', (t) => {
+	let postObject = {
+		body: 'LOrem Ipsum is great',
+		date: 12345,
+		author: 'Owen',
+		picture: 'https://google.com.githubusercontent.com/u/13705650?v=3&s=40',
+		title: 'Our 5th post',
+		comments: 'comments' + this.date
+	};
+	for (let i = 0; i < 10; i++) {
+		postObject.date = 12345 + i;
+		redisFunctions.addPostToDB(postObject);
+	}
+	redisFunctions.get10Posts((reply) => {
+		t.equal(reply.length, 10, 'gets 10 posts back');
+		t.equal(reply[0], 'post12354', 'first post is correct');
+		t.equal(reply[1], 'post12353', 'second post is correct');
+		t.equal(reply[2], 'post12352', 'third post is correct');
+		t.equal(reply[9], 'post12345', '10th post is correct');
+		t.end();
+	});
+});
+
+tape('teardown', t => {
 	server.init.stop();
 	client.flushdb();
 	client.quit();

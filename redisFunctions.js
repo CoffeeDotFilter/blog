@@ -1,3 +1,5 @@
+"use strict";
+
 var redis = require('redis');
 var client = redis.createClient();
 
@@ -36,23 +38,19 @@ function addPostToDB(postObject){
 	client.ZADD('posts', postObject.date, postName, function(error, reply) {
 		if (error) {
 			console.log(error);
-		} else {
-			console.log('Add user message success: ' + reply);
 		}
 	});
 }
 
-function addComment(commentObj, date) {
-	var stringifiedObj = JSON.stringify(commentObj);
-	var commentName = 'comments' + date;
-	client.ZADD(commentName, commentObj.date, stringifiedObj, function(error, reply) {
+let addComment = (commentObj, date) => {
+	const stringifiedObj = JSON.stringify(commentObj);
+	const commentName = 'comments' + date;
+	client.ZADD(commentName, commentObj.date, stringifiedObj, (error, reply) => {
 		if (error) {
 			console.log(error);
-		} else {
-			console.log('Add user message success: ' + reply);
 		}
 	});
-}
+};
 
 function getOnePost(postName, callback) {
 	client.HGETALL(postName, function(err, reply){
@@ -65,7 +63,7 @@ function getOnePost(postName, callback) {
 }
 
 function get10Posts(callback) {
-	client.ZRANGE('posts', 0, 10, function(error, reply) {
+	client.ZREVRANGE('posts', 0, 9, function(error, reply) {
 		if (error) {
 			console.log(error);
 		} else {
