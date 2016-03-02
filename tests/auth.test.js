@@ -30,7 +30,7 @@ tape('Server and validate function should work correctly', (t) => {
     t.equal(response.statusCode, 401,'Server returns 401 Unauthorised (without username/password)');
   });
   server.init.inject({method: 'GET', url: '/admindotfilter', headers: {authorization: basicHeader('MattTheHacker', '<scriptInjection11!>')}}, function(response) {
-    t.equal(response.statusCode, 500,'Server returns 401 with wrong credentials');
+    t.equal(response.statusCode, 500,'Server returns 500 with wrong credentials');
   });
   server.init.inject({method: 'GET', url: '/admindotfilter', headers: {authorization: basicHeader('2093084832fapdsahf', 'ur89ea0whpgu24')}}, function(response) {
     t.equal(response.statusCode, 500,'Server returns 401 with wrong credentials');
