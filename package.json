@@ -18,7 +18,9 @@
   },
   "homepage": "https://github.com/CoffeeDotFilter/blog#readme",
   "devDependencies": {
+    "fakeredis": "^1.0.2",
     "nodemon": "^1.9.1",
+    "redis-mock": "^0.5.1",
     "tape": "^4.4.0"
   },
   "dependencies": {
