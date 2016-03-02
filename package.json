@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "tape ./tests/*",
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "sass": "sass --watch public/scss/style.scss:public/style.css"
   },
   "repository": {
     "type": "git",

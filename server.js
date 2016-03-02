@@ -8,6 +8,7 @@ const Handlebars = require('handlebars');
 const Bcrypt = require('bcrypt');
 const Basic = require('hapi-auth-basic');
 const auth = require('./auth.js');
+const redisFunctions = require('./redisFunctions.js');
 
 server.connection({
   port: 3000
@@ -24,16 +25,48 @@ server.register(plugins, (err) => {
 	server.auth.strategy('simple', 'basic', { 
 		validateFunc: auth.validate,
 	});
-	
+
 	server.views({
 		engines: {html: Handlebars},
 		relativeTo: __dirname,
 		path: 'views',
 		layout: 'default',
-		layoutPath: 'views/layout'
+		layoutPath: 'views/layout',
+    partialsPath: 'views/partials'
 	});
 
-	server.route({
+	server.route([{
+	  method: 'GET',
+	  path: '/',
+	  handler: (request, reply) => {
+      redisFunctions.get10Posts((hashNames) => {
+        let postCounter = 0;
+        let postsArray = [];
+        hashNames.forEach((postHash) => {
+          redisFunctions.getOnePost(postHash, (data) => {
+            postsArray.push(data);
+            postCounter++;
+            if (postCounter === hashNames.length) {
+              console.log(postsArray);
+              reply.view('home', {title: 'Coffee Dot Filter Blog', posts: postsArray});
+            }
+          });
+        });
+      });
+	  }
+	}, {
+    method: 'GET',
+    path: '/blog',
+    handler: (request, reply) => {
+      reply.view('blog');
+    }
+  }, {
+    method: 'GET',
+    path: '/{param*}',
+    handler: {
+      directory: {path: 'public'}
+    }
+  }, {
 	  method: 'GET',
 	  path: '/admindotfilter',
 		config: {
@@ -42,15 +75,7 @@ server.register(plugins, (err) => {
 		          reply.view('dashboard');
 		      }
 		  }
-	});
-	
-	server.route({
-	  method: 'GET',
-	  path: '/',
-	  handler: (request, reply) => {
-			reply.view('home');
-		}
-	});
+	}]);
 });
 
 

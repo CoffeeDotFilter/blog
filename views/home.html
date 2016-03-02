@@ -1,1 +1,10 @@
-<p>This is the home page. Welcome to Coffee.filter()</p>
+{{>navigation}}
+<div class="splash-container">
+
+</div>
+<div class="recent-posts">
+{{#each posts}}
+  <li>{{this}}</li>
+{{/each}}
+</div>
+{{>footer}}

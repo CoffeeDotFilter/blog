@@ -1,3 +1,45 @@
+body {
+  font-family: Roboto;
+  margin: 0; }
 
+/*******------------------
+Navigation -------********/
+nav {
+  background-color: #fff; }
+
+.logo-div {
+  max-width: 11.6em;
+  box-sizing: border-box;
+  display: inline-block;
+  padding: 0.8em 1.8em; }
+
+.logo-div-img {
+  width: 100%; }
+
+.links {
+  float: right;
+  box-sizing: border-box;
+  display: inline-block;
+  font-size: 1.5em;
+  margin: 1.9em 1em; }
+  .links a {
+    text-decoration: none;
+    margin-left: 0.5em;
+    color: #000; }
+
+/*******------------------
+home splash -------********/
+.splash-container {
+  background-color: #F9C80D;
+  min-height: 10em; }
+
+/*******------------------
+footer -------********/
+footer p {
+  display: inline-block; }
+
+.footer-img {
+  max-width: 2em;
+  margin: 0 1.5em; }
 
 /*# sourceMappingURL=style.css.map */

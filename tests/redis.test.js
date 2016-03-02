@@ -95,6 +95,21 @@ tape('get10Posts gets 10 posts back', (t) => {
 	});
 });
 
+// Server tests........
+tape('check that server responds', (t) => {
+  server.init.inject({method: 'GET', url: '/'}, (response) => {
+    t.equal(response.statusCode, 200,'Response "200" received from server');
+    t.end();
+  });
+});
+
+tape('check that server returns something for '/' request', (t) => {
+	server.init.inject({method: 'GET', url: '/'}, (response) => {
+		t.ok(response.payload.indexOf('Welcome to Coffee.filter()'), 'server returns index page');
+		t.end();
+	});
+});
+
 tape('teardown', t => {
 	server.init.stop();
 	client.flushdb();
