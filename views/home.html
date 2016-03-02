@@ -1,8 +1,10 @@
 {{>navigation}}
 <div class="splash-container">
 
-
 </div>
 <div class="recent-posts">
+{{#each posts}}
+  <li>{{this}}</li>
+{{/each}}
 </div>
 {{>footer}}

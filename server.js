@@ -5,6 +5,7 @@ const server = new Hapi.Server();
 const Inert = require('inert');
 const Vision = require('vision');
 const Handlebars = require('handlebars');
+const redisFunctions = require('./redisFunctions.js');
 
 server.connection({
   port: 3000
@@ -12,9 +13,17 @@ server.connection({
 
 const plugins = [
 	Inert,
-	Vision,
-	Handlebars
+	Vision
 ];
+
+// const myPostObject = {
+//   body: 'alksdjskaldjaskldjaskldjaskldjaskdl',
+//   date: 12347,
+//   author: 'Owen',
+//   picture: 'https://google.com.githubusercontent.com/u/13705650?v=3&s=40',
+//   title: 'annother random post',
+//   comments: 'comments' + this.date
+// };
 
 server.register([Vision, Inert], (err) => {
 
@@ -31,7 +40,20 @@ server.register([Vision, Inert], (err) => {
 	  method: 'GET',
 	  path: '/',
 	  handler: (request, reply) => {
-	    reply.view('home', {title: 'Coffee Dot Filter Blog'});
+      redisFunctions.get10Posts((hashNames) => {
+        let postCounter = 0;
+        let postsArray = [];
+        hashNames.forEach((postHash) => {
+          redisFunctions.getOnePost(postHash, (data) => {
+            postsArray.push(data);
+            postCounter++;
+            if (postCounter === hashNames.length) {
+              console.log(postsArray);
+              reply.view('home', {title: 'Coffee Dot Filter Blog', posts: postsArray});
+            }
+          });
+        });
+      });
 	  }
 	}, {
     method: 'GET',
