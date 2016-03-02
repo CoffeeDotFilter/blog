@@ -17,22 +17,35 @@ const plugins = [
 ];
 
 server.register([Vision, Inert], (err) => {
-	
+
 	server.views({
 		engines: {html: Handlebars},
 		relativeTo: __dirname,
 		path: 'views',
 		layout: 'default',
-		layoutPath: 'views/layout'
+		layoutPath: 'views/layout',
+    partialsPath: 'views/partials'
 	});
-	
-	server.route({
+
+	server.route([{
 	  method: 'GET',
 	  path: '/',
 	  handler: (request, reply) => {
-	    reply.view('home');
+	    reply.view('home', {title: 'Coffee Dot Filter Blog'});
 	  }
-	});
+	}, {
+    method: 'GET',
+    path: '/blog',
+    handler: (request, reply) => {
+      reply.view('blog');
+    }
+  }, {
+    method: 'GET',
+    path: '/{param*}',
+    handler: {
+      directory: {path: 'public'}
+    }
+  }]);
 });
 
 
