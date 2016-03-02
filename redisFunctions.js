@@ -3,27 +3,6 @@
 var redis = require('redis');
 var client = redis.createClient();
 
-// var myPostObject = {
-// 	body: 'LOrem Ipsum is great',
-// 	date: Date.now(),
-// 	author: 'Owen',
-// 	picture: 'https://google.com.githubusercontent.com/u/13705650?v=3&s=40',
-// 	title: 'Our 5th post',
-// 	comments: 'comments' + this.date
-// };
-//
-// var myCommentObj = {
-// 	body: 'this post is rubbish',
-// 	date: Date.now(),
-// 	author: 'Sohil'
-// };
-//
-// var myCommentObj2 = {
-// 	body: 'seriously bad',
-// 	date: Date.now(),
-// 	author: 'Huw'
-// };
-
 function addPostToDB(postObject){
 	var postName = 'post' + postObject.date;
 	client.HMSET(postName, 	'body', postObject.body,
@@ -89,3 +68,24 @@ module.exports = {
 	getOnePost: getOnePost,
 	get10Posts: get10Posts
 };
+
+// var myPostObject = {
+// 	body: 'LOrem Ipsum is great',
+// 	date: Date.now(),
+// 	author: 'Owen',
+// 	picture: 'https://google.com.githubusercontent.com/u/13705650?v=3&s=40',
+// 	title: 'Our 5th post',
+// 	comments: 'comments' + this.date
+// };
+//
+// var myCommentObj = {
+// 	body: 'this post is rubbish',
+// 	date: Date.now(),
+// 	author: 'Sohil'
+// };
+//
+// var myCommentObj2 = {
+// 	body: 'seriously bad',
+// 	date: Date.now(),
+// 	author: 'Huw'
+// };
