@@ -1,2 +1,9 @@
 {{>navigation}}
-<h1>This is the blog page!</h1>
+<div class="content-container">
+  <h1>This is the blog page!</h1>
+  <div class="recent-posts">
+  {{#each posts}}
+    {{>posts this}}
+  {{/each}}
+  </div>
+</div>
