@@ -11,4 +11,4 @@ addons:
 services:
   - redis-server
 env:
-  - TRAVIS=travis CXX=g++-4.8
+  - TRAVIS=travis CXX=g++-4.8 fakeusername=$2a$04$M.JTXZG1fG0kHlyhzaeDR.ufF9fbJ5fWsqP8mVdOjk2KnSAP97dhi

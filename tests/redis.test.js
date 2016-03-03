@@ -3,7 +3,7 @@
 const tape = require('tape');
 const redisFunctions = require('../redisFunctions.js');
 const server = require('../server.js');
-var client = redisFunctions.client;
+let client = redisFunctions.client;
 
 client.select(3, function() {
 	'connected to db3';
@@ -110,7 +110,7 @@ tape('check that server returns something for '/' request', (t) => {
 	});
 });
 
-tape('teardown', t => {
+tape('teardown', (t) => {
 	server.init.stop();
 	client.flushdb();
 	client.quit();

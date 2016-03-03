@@ -20,12 +20,14 @@
   },
   "homepage": "https://github.com/CoffeeDotFilter/blog#readme",
   "devDependencies": {
+    "env2": "^2.0.6",
     "istanbul": "^0.4.2",
     "nodemon": "^1.9.1",
     "tape": "^4.4.0"
   },
   "dependencies": {
     "bcrypt": "^0.8.5",
+    "env2": "^2.0.6",
     "handlebars": "^4.0.5",
     "hapi": "^13.0.0",
     "hapi-auth-basic": "^4.1.0",
