@@ -1,0 +1,13 @@
+@for $i from 1 through 6 {
+  .coffee-cup-#{$i} {
+    animation: mexican-wave 3s linear infinite;
+    animation-delay: 0s + ($i/10);
+  }
+}
+
+@keyframes mexican-wave {
+  0% {transform: translateY(0px);}
+  10% {transform: translateY(-5px);}
+  20% {transform: translateY(0px);}
+  100% {transform: translateY(0px);}
+}
