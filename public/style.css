@@ -35,23 +35,39 @@ nav {
 home splash -------********/
 .splash-container {
   background-color: #F9C80D;
-  min-height: 17em; }
+  min-height: 20em; }
 
 .coffee-container {
   width: 50%;
   margin: 0 auto;
-  padding: 3.6em; }
+  padding: 4.9em; }
 
 .cup-container {
   width: 100%; }
 
 .coffee-cup {
-  width: 16.66%;
+  width: 12.66%;
   box-sizing: border-box;
   padding: 0.6em;
   float: left;
   display: inline-block; }
   .coffee-cup img {
+    width: 100%; }
+
+.filter-container {
+  width: 26em;
+  margin: 0 auto;
+  padding-left: 10em; }
+  .filter-container img {
+    width: 100%; }
+
+.left-bracket,
+.right-bracket {
+  display: inline-block;
+  width: 8%;
+  float: left; }
+  .left-bracket img,
+  .right-bracket img {
     width: 100%; }
 
 /*******------------------
@@ -61,7 +77,7 @@ posts -------********/
   max-width: 600px; }
 
 .title {
-  font-size: 2em;
+  font-size: 1.8em;
   margin-bottom: 0.4em; }
 
 .author {
