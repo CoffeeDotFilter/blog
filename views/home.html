@@ -2,9 +2,12 @@
 <div class="splash-container">
 
 </div>
-<div class="recent-posts">
-{{#each posts}}
-  {{>posts this}}
-{{/each}}
+<div class="content-container">
+  <div class="recent-posts">
+  {{#each posts}}
+    {{>posts this}}
+  {{/each}}
+  </div>
+  {{>profiles}}
 </div>
 {{>footer}}
