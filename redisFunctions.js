@@ -105,6 +105,7 @@ const get10Posts = (callback) => {
     		getOnePost(postHash, (data) => {
       		postsArray.push(data);
       		postCounter++;
+      		// Once all posts have been pushed to array, return array
       		if (postCounter === hashNames.length) {
     	  		return callback(postsArray);
       		}
