@@ -26,7 +26,7 @@ server.register(plugins, (err) => {
 
   if(err) console.log(err);
 
-	server.auth.strategy('simple', 'basic', { 
+	server.auth.strategy('simple', 'basic', {
 		validateFunc: auth.validate
 	});
 
@@ -36,7 +36,8 @@ server.register(plugins, (err) => {
 		path: 'views',
 		layout: 'default',
 		layoutPath: 'views/layout',
-    partialsPath: 'views/partials'
+    helpersPath: 'views/helpers',
+    partialsPath: 'views/partials',
 	});
 
 	server.route([{
