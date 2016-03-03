@@ -62,7 +62,14 @@ server.register(plugins, (err) => {
         } else {
           reply.view('blog', {title: 'Blog - Coffee Dot Filter Blog'});
         }
-      })
+      });
+    }
+  }, {
+    method: 'GET',
+    path: '/blog/{title*}',
+    handler: (request, reply) => {
+      var data = request.params['title'].split('-').join(' ');
+      reply(data);
     }
   }, {
     method: 'GET',
@@ -78,8 +85,8 @@ server.register(plugins, (err) => {
 		      handler: function (request, reply) {
             console.log(request.auth);
 		          reply.view('dashboard', {
-                author: request.auth.credentials.username, 
-                title: 'Admin View', 
+                author: request.auth.credentials.username,
+                title: 'Admin View',
                 link: 'https://cdn.tinymce.com/4/tinymce.min.js'
               });
 		      }

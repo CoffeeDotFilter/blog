@@ -4,8 +4,7 @@ body {
 
 .content-container {
   margin: 0 auto;
-  max-width: 1000px;
-  width: 90%; }
+  max-width: 600px; }
 
 /*******------------------
 Navigation -------********/
@@ -36,17 +35,20 @@ nav {
 home splash -------********/
 .splash-container {
   background-color: #F9C80D;
-  min-height: 10em; }
+  min-height: 17em; }
 
 .coffee-container {
   width: 50%;
-  margin: 0 auto; }
+  margin: 0 auto;
+  padding: 3.6em; }
 
 .cup-container {
   width: 100%; }
 
 .coffee-cup {
   width: 16.66%;
+  box-sizing: border-box;
+  padding: 0.6em;
   float: left;
   display: inline-block; }
   .coffee-cup img {
@@ -56,13 +58,23 @@ home splash -------********/
 posts -------********/
 .post-container {
   margin: 3.5em auto;
-  width: 60%; }
+  max-width: 600px; }
+
+.title {
+  font-size: 2em;
+  margin-bottom: 0.4em; }
 
 .author {
-  display: inline-block; }
+  display: inline-block;
+  font-size: 1.1em; }
 
 .date {
-  display: inline-block; }
+  display: inline-block;
+  font-size: 0.8em;
+  letter-spacing: 0.9px;
+  /* text-transform: uppercase; */
+  margin-left: 1.2em;
+  font-weight: bold; }
 
 .body {
   margin-top: 2em; }
