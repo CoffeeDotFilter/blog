@@ -1,14 +1,14 @@
 "use strict";
 
 if (process.env.REDISTOGO_URL) {
-    var rtg   = require("url").parse(process.env.REDISTOGO_URL);
+  var rtg   = require("url").parse(process.env.REDISTOGO_URL);
 	var client = require("redis").createClient(rtg.port, rtg.hostname);
 	client.auth(rtg.auth.split(":")[1]);
 } else {
-    var client = require("redis").createClient();
+  var client = require("redis").createClient();
 }
 
-function addPostToDB(postObject){
+const addPostToDB = (postObject) => {
 	var postName = 'post' + postObject.date;
 	client.HMSET(postName, 	'body', postObject.body,
 							'date', postObject.date,
@@ -24,9 +24,9 @@ function addPostToDB(postObject){
 			console.log(error);
 		}
 	});
-}
+};
 
-let addComment = (commentObj, date) => {
+const addComment = (commentObj, date) => {
 	const stringifiedObj = JSON.stringify(commentObj);
 	const commentName = 'comments' + date;
 	client.ZADD(commentName, commentObj.date, stringifiedObj, (error, reply) => {
@@ -36,7 +36,7 @@ let addComment = (commentObj, date) => {
 	});
 };
 
-function getOnePost(postName, callback) {
+const getOnePost = (postName, callback) => {
 	client.HGETALL(postName, function(err, reply){
 		if(err) {
 			console.log(err);
@@ -46,7 +46,28 @@ function getOnePost(postName, callback) {
 	});
 }
 
-function get10Posts(callback) {
+const getPostByName = (title, callback) => {
+	client.ZRANGE('posts', 0, -1, (err, hashNames) => {
+		if (err) console.log(err);
+		else {
+			hashNames.forEach((postHash) => {
+				client.HGET(postHash, 'title', (err, reply) => {
+					if(err) console.log(err);
+					else {
+						if(reply === title) {
+							client.HGETALL(postHash, (err, reply) => {
+								if (err) console.log(err);
+								else return callback(reply);
+							});
+						}
+					}
+				});
+			});
+		}
+	});
+};
+
+const get10Posts = (callback) => {
 	client.ZREVRANGE('posts', 0, 9, function(error, hashNames) {
 		if (error) console.log(error);
 		else if (hashNames.length === 0) return callback();
@@ -64,7 +85,7 @@ function get10Posts(callback) {
       });
 		}
 	});
-}
+};
 
 module.exports = {
 	client: client,
@@ -74,7 +95,7 @@ module.exports = {
 	get10Posts: get10Posts
 };
 
-// var myPostObject = {
+// const myPostObject = {
 // 	body: 'LOrem Ipsum is great',
 // 	date: Date.now(),
 // 	author: 'Owen',
@@ -82,6 +103,10 @@ module.exports = {
 // 	title: 'Our 5th post',
 // 	comments: 'comments' + this.date
 // };
+
+// getPostByName('Our 5th post', (reply) =>{
+// 	console.log(reply);
+// });
 //
 // var myCommentObj = {
 // 	body: 'this post is rubbish',
