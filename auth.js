@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const env = require('env2')('./config.env');
 
 const validate = (request, username, actualPassword, callback) => {
+	console.log(process.env[username.toLowerCase()]);
 	bcrypt.compare(actualPassword, process.env[username.toLowerCase()], (err, isValid) => {
 		return callback(err, isValid, {'username': username});
 	});
