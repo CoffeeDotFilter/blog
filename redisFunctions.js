@@ -1,7 +1,12 @@
 "use strict";
 
-var redis = require('redis');
-var client = redis.createClient();
+if (process.env.REDISTOGO_URL) {
+    var rtg   = require("url").parse(process.env.REDISTOGO_URL);
+	var client = require("redis").createClient(rtg.port, rtg.hostname);
+	client.auth(rtg.auth.split(":")[1]);
+} else {
+    var client = require("redis").createClient();
+}
 
 function addPostToDB(postObject){
 	var postName = 'post' + postObject.date;
@@ -36,7 +41,7 @@ function getOnePost(postName, callback) {
 		if(err) {
 			console.log(err);
 		} else {
-			callback(reply);
+			return callback(reply);
 		}
 	});
 }
@@ -46,7 +51,7 @@ function get10Posts(callback) {
 		if (error) {
 			console.log(error);
 		} else {
-			callback(reply);
+			return callback(reply);
 		}
 	});
 }

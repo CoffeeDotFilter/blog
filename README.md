@@ -1,5 +1,12 @@
 # CoffeeDotFilter Blog
 
+[![Build Status](https://travis-ci.org/CoffeeDotFilter/blog.svg?branch=master)](https://travis-ci.org/CoffeeDotFilter/blog)
+[![Code Climate](https://codeclimate.com/github/CoffeeDotFilter/blog/badges/gpa.svg)](https://codeclimate.com/github/CoffeeDotFilter/blog)
+[![codecov.io](https://codecov.io/github/CoffeeDotFilter/blog/coverage.svg?branch=master)](https://codecov.io/github/CoffeeDotFilter/blog?branch=master)
+[![Codecrystal](https://img.shields.io/badge/code-crystal-5CB3FF.svg)](http://codecrystal.herokuapp.com/crystalise/CoffeeDotFilter/blog/master)
+[![Dependency Status](https://david-dm.org/CoffeeDotFilter/blog.svg)](https://david-dm.org/CoffeeDotFilter/blog)
+[![devDependency Status](https://david-dm.org/CoffeeDotFilter/blog/dev-status.svg)](https://david-dm.org/CoffeeDotFilter/blog#info=devDependencies)
+
 This is our blog using full stack JavaScript!
 
 ### Why?
