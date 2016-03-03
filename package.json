@@ -1,6 +1,9 @@
 {
   "name": "blog",
   "version": "1.0.0",
+  "engines": {
+    "node": "4.1.1"
+  },
   "description": "our full stack blog",
   "main": "server.js",
   "scripts": {
@@ -20,7 +23,6 @@
   },
   "homepage": "https://github.com/CoffeeDotFilter/blog#readme",
   "devDependencies": {
-    "env2": "^2.0.6",
     "istanbul": "^0.4.2",
     "nodemon": "^1.9.1",
     "tape": "^4.4.0"
