@@ -10,7 +10,9 @@ if (process.env.REDISTOGO_URL) {
 
 const addPostToDB = (postObject) => {
 	var postName = 'post' + postObject.date;
-	client.HMSET(postName, 	'body', postObject.body,
+	// Set Hash of post with all properties
+	client.HMSET(postName, 	
+							'body', postObject.body,
 							'date', postObject.date,
 							'author', postObject.author,
 							'picture', postObject.picture,
@@ -19,6 +21,7 @@ const addPostToDB = (postObject) => {
 		function(err, reply) {
 			if(err) console.log(err);
 	});
+	// Add postName to sorted set for access to all posts in order of date 
 	client.ZADD('posts', postObject.date, postName, function(error, reply) {
 		if (error) {
 			console.log(error);
@@ -27,11 +30,14 @@ const addPostToDB = (postObject) => {
 };
 
 const addComment = (commentObj, date) => {
-	const stringifiedObj = JSON.stringify(commentObj)
+	// Stringify object and remove nefarious script injections, and format for markdown
+	const stringifiedObj = JSON .stringify(commentObj)
 															.replace(/</g, "we h8").replace(/>/g, "hackers")
 															.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
 															.replace(/\*([^*]+)\*/g, '<em>$1</em>');
 	const commentName = 'comments' + date;
+	// Add to sorted list with name linked to post that comments are from
+	// Score is date of the comment, whole comment is value in stringified object
 	client.ZADD(commentName, commentObj.date, stringifiedObj, (error, reply) => {
 		if (error) {
 			console.log(error);
@@ -40,20 +46,17 @@ const addComment = (commentObj, date) => {
 };
 
 const getComments = (commentsHash, callback) => {
-	client.ZRANGE(commentsHash, 0, -1, (err, commentArray) => {
+	client.ZREVRANGE(commentsHash, 0, -1, (err, commentArray) => {
 		if (err) console.log(err);
 		else return callback(commentArray);
 	});
 };
 
-// getComments('comments1457027014176', (x) => {
-// 	console.log(x);
-// });
-
 const getOnePost = (postName, callback) => {
 	client.HGETALL(postName, function(err, reply){
 		if(err) {
 			console.log(err);
+			return callback(err);
 		} else {
 			return callback(reply);
 		}
@@ -61,17 +64,19 @@ const getOnePost = (postName, callback) => {
 };
 
 const getPostByName = (title, callback) => {
-	// Gets array of all the posts
+	// Get array of all the posts
 	client.ZRANGE('posts', 0, -1, (err, hashNames) => {
-		if (err) console.log(err);
-		else {
+		if (err) {
+			console.log(err);
+			return callback(err);
+		}	else {
+			// Check title of each post for match with title parameter
 			hashNames.forEach((postHash) => {
-				// Checks title of each post for match with title parameter
 				client.HGET(postHash, 'title', (err, reply) => {
 					if(err) console.log(err);
 					else {
 						if(reply === title) {
-							// if match, returns entire post object in callback
+							// if match, return entire post object in callback
 							client.HGETALL(postHash, (err, reply) => {
 								if (err) console.log(err);
 								else return callback(reply);
@@ -86,21 +91,25 @@ const getPostByName = (title, callback) => {
 };
 
 const get10Posts = (callback) => {
+	// Fetch most recent 10 posts from sorted set
 	client.ZREVRANGE('posts', 0, 9, function(error, hashNames) {
-		if (error) console.log(error);
-		else if (hashNames.length === 0) return callback();
-    else {
-      let postCounter = 0;
-      let postsArray = [];
+		if (error) {
+			console.log(error);
+			return callback(error);
+		} else if (hashNames.length === 0) {
+			return callback();
+		} else {
+  		let postCounter = 0;
+  		let postsArray = [];
 			hashNames.forEach((postHash) => {
-        getOnePost(postHash, (data) => {
-          postsArray.push(data);
-          postCounter++;
-          if (postCounter === hashNames.length) {
-            return callback(postsArray);
-          }
-        });
-      });
+    		getOnePost(postHash, (data) => {
+      		postsArray.push(data);
+      		postCounter++;
+      		if (postCounter === hashNames.length) {
+    	  		return callback(postsArray);
+      		}
+    		});
+  		});
 		}
 	});
 };

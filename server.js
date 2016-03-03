@@ -88,7 +88,6 @@ server.register(plugins, (err) => {
 		config: {
 		      auth: 'simple',
 		      handler: function (request, reply) {
-            console.log(request.auth);
 		          reply.view('dashboard', {
                 author: request.auth.credentials.username,
                 title: 'Admin View',
