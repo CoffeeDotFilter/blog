@@ -11,7 +11,7 @@ let basicHeader = (username, password) => {
 };
 
 tape('Server and validate function should work correctly', (t) => {
-	t.plan(4);
+	t.plan(3);
 	server.init.inject({method: 'GET', url: '/admindotfilter'}, (response) => {
     t.equal(response.statusCode, 401,'Server returns 401 Unauthorised (without username/password)');
   });
