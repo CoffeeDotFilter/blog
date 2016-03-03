@@ -68,7 +68,7 @@ server.register(plugins, (err) => {
     method: 'GET',
     path: '/blog/{title*}',
     handler: (request, reply) => {
-      var data = request.params['title'].split('-').join(' ');
+      var data = request.params.title.split('-').join(' ');
       reply(data);
     }
   }, {
@@ -96,6 +96,7 @@ server.register(plugins, (err) => {
     path: '/admindotfilter',
     handler: (request, reply) => {
       redisFunctions.addPostToDB(request.payload);
+      reply.redirect('/blog');
     }
   }]);
 });

@@ -30,9 +30,9 @@ tinymce.init({
 
 		// Display author's name in display div, capitalised
 		var author = document.getElementById('author');
-		display.innerHTML += ' <br><b>Author:</b> ' 
-											+ author.value.substr(0,1).toUpperCase() 
-											+ author.value.substr(1);
+		display.innerHTML += ' <br><b>Author:</b> ' + 
+                          author.value.substr(0,1).toUpperCase() + 
+                          author.value.substr(1);
 		
 })();
 

@@ -27,12 +27,22 @@ const addPostToDB = (postObject) => {
 };
 
 const addComment = (commentObj, date) => {
-	const stringifiedObj = JSON.stringify(commentObj);
+	const stringifiedObj = JSON.stringify(commentObj)
+															.replace(/</g, "we h8").replace(/>/g, "hackers")
+															.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+															.replace(/\*([^*]+)\*/g, '<em>$1</em>');
 	const commentName = 'comments' + date;
 	client.ZADD(commentName, commentObj.date, stringifiedObj, (error, reply) => {
 		if (error) {
 			console.log(error);
 		}
+	});
+};
+
+const getComments = (commentsHash, callback) => {
+	client.ZRANGE(commentsHash, 0, -1, (err, commentArray) => {
+		if (err) console.log(err);
+		else return callback(commentArray)
 	});
 };
 
@@ -44,17 +54,20 @@ const getOnePost = (postName, callback) => {
 			return callback(reply);
 		}
 	});
-}
+};
 
 const getPostByName = (title, callback) => {
+	// Gets array of all the posts
 	client.ZRANGE('posts', 0, -1, (err, hashNames) => {
 		if (err) console.log(err);
 		else {
 			hashNames.forEach((postHash) => {
+				// Checks title of each post for match with title parameter
 				client.HGET(postHash, 'title', (err, reply) => {
 					if(err) console.log(err);
 					else {
 						if(reply === title) {
+							// if match, returns entire post object in callback
 							client.HGETALL(postHash, (err, reply) => {
 								if (err) console.log(err);
 								else return callback(reply);
