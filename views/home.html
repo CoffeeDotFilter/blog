@@ -4,12 +4,7 @@
 </div>
 <div class="recent-posts">
 {{#each posts}}
-  <div class="">
-    <p>{{this.title}}</p>
-    <p>{{this.author}}</p>
-    <p>{{this.date}}</p>
-    <p>{{this.body}}</p>
-  </div>
+  {{>posts this}}
 {{/each}}
 </div>
 {{>footer}}
