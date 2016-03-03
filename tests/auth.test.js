@@ -1,3 +1,5 @@
+"use strict";
+
 const tape = require('tape');
 const redisFunctions = require('../redisFunctions.js');
 const server = require('../server.js');
