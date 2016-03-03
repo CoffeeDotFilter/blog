@@ -47,7 +47,7 @@ server.register(plugins, (err) => {
         if (data) {
           reply.view('home', {title: 'Coffee Dot Filter Blog', posts: data});
         } else {
-          reply.view('home', {title: 'Coffee Dot Filter Blog'});
+          reply.view('home', {title: 'Home - Coffee Dot Filter Blog'});
         }
       });
 	  }
@@ -55,7 +55,13 @@ server.register(plugins, (err) => {
     method: 'GET',
     path: '/blog',
     handler: (request, reply) => {
-      reply.view('blog');
+      redisFunctions.get10Posts((data) => {
+        if (data) {
+          reply.view('blog', {title: 'Blog - Coffee Dot Filter Blog', posts: data});
+        } else {
+          reply.view('blog', {title: 'Blog - Coffee Dot Filter Blog'});
+        }
+      })
     }
   }, {
     method: 'GET',

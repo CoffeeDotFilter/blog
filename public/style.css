@@ -42,8 +42,12 @@ home splash -------********/
   width: 50%;
   margin: 0 auto; }
 
+.cup-container {
+  width: 100%; }
+
 .coffee-cup {
-  width: 2.5em;
+  width: 16.66%;
+  float: left;
   display: inline-block; }
   .coffee-cup img {
     width: 100%; }
