@@ -47,11 +47,21 @@ function getOnePost(postName, callback) {
 }
 
 function get10Posts(callback) {
-	client.ZREVRANGE('posts', 0, 9, function(error, reply) {
-		if (error) {
-			console.log(error);
-		} else {
-			return callback(reply);
+	client.ZREVRANGE('posts', 0, 9, function(error, hashNames) {
+		if (error) console.log(error);
+		else if (hashNames.length === 0) return callback();
+    else {
+      let postCounter = 0;
+      let postsArray = [];
+			hashNames.forEach((postHash) => {
+        getOnePost(postHash, (data) => {
+          postsArray.push(data);
+          postCounter++;
+          if (postCounter === hashNames.length) {
+            return callback(postsArray);
+          }
+        });
+      });
 		}
 	});
 }
