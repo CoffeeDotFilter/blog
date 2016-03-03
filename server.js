@@ -48,7 +48,7 @@ server.register(plugins, (err) => {
         if (data) {
           reply.view('home', {title: 'Coffee Dot Filter Blog', posts: data});
         } else {
-          reply.view('home', {title: 'Coffee Dot Filter Blog'});
+          reply.view('home', {title: 'Home - Coffee Dot Filter Blog'});
         }
       });
 	  }
@@ -56,7 +56,20 @@ server.register(plugins, (err) => {
     method: 'GET',
     path: '/blog',
     handler: (request, reply) => {
-      reply.view('blog');
+      redisFunctions.get10Posts((data) => {
+        if (data) {
+          reply.view('blog', {title: 'Blog - Coffee Dot Filter Blog', posts: data});
+        } else {
+          reply.view('blog', {title: 'Blog - Coffee Dot Filter Blog'});
+        }
+      });
+    }
+  }, {
+    method: 'GET',
+    path: '/blog/{title*}',
+    handler: (request, reply) => {
+      var data = request.params['title'].split('-').join(' ');
+      reply(data);
     }
   }, {
     method: 'GET',
@@ -72,8 +85,8 @@ server.register(plugins, (err) => {
 		      handler: function (request, reply) {
             console.log(request.auth);
 		          reply.view('dashboard', {
-                author: request.auth.credentials.username, 
-                title: 'Admin View', 
+                author: request.auth.credentials.username,
+                title: 'Admin View',
                 link: 'https://cdn.tinymce.com/4/tinymce.min.js'
               });
 		      }
