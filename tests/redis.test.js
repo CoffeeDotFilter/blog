@@ -87,10 +87,10 @@ tape('get10Posts gets 10 posts back', (t) => {
 	}
 	redisFunctions.get10Posts((reply) => {
 		t.equal(reply.length, 10, 'gets 10 posts back');
-		t.equal(reply[0], 'post12354', 'first post is correct');
-		t.equal(reply[1], 'post12353', 'second post is correct');
-		t.equal(reply[2], 'post12352', 'third post is correct');
-		t.equal(reply[9], 'post12345', '10th post is correct');
+		t.equal(reply[0].date, '12354', 'first post has correct timestamp');
+		t.equal(reply[1].date, '12353', 'second post has correct timestamp');
+		t.equal(reply[2].date, '12352', 'third post has correct timestamp');
+		t.equal(reply[9].date, '12345', '10th post has correct timestamp');
 		t.end();
 	});
 });
@@ -116,4 +116,3 @@ tape('teardown', (t) => {
 	client.quit();
 	t.end();
 });
-

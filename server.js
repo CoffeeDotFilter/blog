@@ -44,19 +44,12 @@ server.register(plugins, (err) => {
 	  method: 'GET',
 	  path: '/',
 	  handler: (request, reply) => {
-      redisFunctions.get10Posts((hashNames) => {
-        let postCounter = 0;
-        let postsArray = [];
-        hashNames.forEach((postHash) => {
-          redisFunctions.getOnePost(postHash, (data) => {
-            postsArray.push(data);
-            postCounter++;
-            if (postCounter === hashNames.length) {
-              console.log(postsArray);
-              reply.view('home', {title: 'Coffee Dot Filter Blog', posts: postsArray});
-            }
-          });
-        });
+      redisFunctions.get10Posts((data) => {
+        if (data) {
+          reply.view('home', {title: 'Coffee Dot Filter Blog', posts: data});
+        } else {
+          reply.view('home', {title: 'Coffee Dot Filter Blog'});
+        }
       });
 	  }
 	}, {
