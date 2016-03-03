@@ -34,7 +34,7 @@ nav {
   box-sizing: border-box;
   display: inline-block;
   font-size: 1.5em;
-  margin: 1.9em 1em;
+  margin: 1.9em 1em 0;
 
   a {
     text-decoration: none;
@@ -51,7 +51,19 @@ home splash -------********/
   min-height: 10em;
 }
 
+.coffee-container {
+  width: 50%;
+  margin: 0 auto;
+}
 
+.coffee-cup {
+  width: 2.5em;
+  display: inline-block;
+
+  img {
+    width: 100%;
+  }
+}
 
 /*******------------------
 posts -------********/

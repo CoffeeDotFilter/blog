@@ -26,7 +26,7 @@ nav {
   box-sizing: border-box;
   display: inline-block;
   font-size: 1.5em;
-  margin: 1.9em 1em; }
+  margin: 1.9em 1em 0; }
   .links a {
     text-decoration: none;
     margin-left: 0.5em;
@@ -37,6 +37,16 @@ home splash -------********/
 .splash-container {
   background-color: #F9C80D;
   min-height: 10em; }
+
+.coffee-container {
+  width: 50%;
+  margin: 0 auto; }
+
+.coffee-cup {
+  width: 2.5em;
+  display: inline-block; }
+  .coffee-cup img {
+    width: 100%; }
 
 /*******------------------
 posts -------********/
