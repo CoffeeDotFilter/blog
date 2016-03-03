@@ -2,12 +2,11 @@
 
 <form method="post" id="form">
 	<input type="text" style="display:none" value="{{author}}" name="author" id="author">
-	<input type="text" placeholder="Title" name="title">
-	<input type="text" placeholder="Image link" name="picture">
+	<input type="text" placeholder="Title" name="title" required>
+	<input type="text" placeholder="Image link" name="picture" required>
 	<input type="text" style="display:none" name="date" id="date">
 	<div id="display"></div>
 	<textarea id="tiny" form="form" name="body">Hello World</textarea>
 	<button id='button'>SUBMIT</button>
 </form>
-
 <script src="dashboard.js" type="text/javascript"></script>

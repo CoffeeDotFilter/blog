@@ -59,6 +59,7 @@ const getPostByName = (title, callback) => {
 								if (err) console.log(err);
 								else return callback(reply);
 							});
+              return;
 						}
 					}
 				});
@@ -92,7 +93,8 @@ module.exports = {
 	addPostToDB: addPostToDB,
 	addComment: addComment,
 	getOnePost: getOnePost,
-	get10Posts: get10Posts
+	get10Posts: get10Posts,
+  getPostByName: getPostByName,
 };
 
 // const myPostObject = {

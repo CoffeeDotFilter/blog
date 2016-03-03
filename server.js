@@ -68,8 +68,11 @@ server.register(plugins, (err) => {
     method: 'GET',
     path: '/blog/{title*}',
     handler: (request, reply) => {
-      var data = request.params['title'].split('-').join(' ');
-      reply(data);
+      var postName = request.params['title'].split('-').join(' ');
+      redisFunctions.getPostByName(postName, (postData) => {
+        console.log(postData);
+        reply.view('singlePost', {post: postData});
+      });
     }
   }, {
     method: 'GET',
@@ -95,6 +98,7 @@ server.register(plugins, (err) => {
     method: 'POST',
     path: '/admindotfilter',
     handler: (request, reply) => {
+      console.log(request.payload);
       redisFunctions.addPostToDB(request.payload);
     }
   }]);

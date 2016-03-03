@@ -3,5 +3,5 @@
 const moment = require('moment');
 
 module.exports = (rawDate) => {
-  return moment(rawDate).format('MMM Do YY');
+  return moment(+rawDate).format('MMM Do YY');
 };
