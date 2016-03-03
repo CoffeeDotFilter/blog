@@ -70,8 +70,10 @@ server.register(plugins, (err) => {
     handler: (request, reply) => {
       var postName = request.params.title.split('-').join(' ');
       redisFunctions.getPostByName(postName, (postData) => {
-        console.log(postData);
-        reply.view('singlePost', {post: postData});
+        redisFunctions.getComments(postData.comments, (commentArray) => {
+          commentArray = commentArray.map(x => JSON.parse(x));
+          reply.view('singlePost', {post: postData, date: postData.date, comments: commentArray});
+        });
       });
     }
   }, {
@@ -98,9 +100,21 @@ server.register(plugins, (err) => {
     method: 'POST',
     path: '/admindotfilter',
     handler: (request, reply) => {
-      console.log(request.payload);
       redisFunctions.addPostToDB(request.payload);
       reply.redirect('/blog');
+    }
+  }, {
+    method: 'POST',
+    path: '/blog/{title*}',
+    handler: (request, reply) => {
+      const commentDate = Date.now();
+      const commentObj = {
+        body: request.payload.body,
+        date: commentDate,
+        author: request.payload.author
+      };
+      redisFunctions.addComment(commentObj, request.payload.date);
+      reply.redirect('/blog/' + request.params.title);
     }
   }]);
 });

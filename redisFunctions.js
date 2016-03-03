@@ -42,9 +42,13 @@ const addComment = (commentObj, date) => {
 const getComments = (commentsHash, callback) => {
 	client.ZRANGE(commentsHash, 0, -1, (err, commentArray) => {
 		if (err) console.log(err);
-		else return callback(commentArray)
+		else return callback(commentArray);
 	});
 };
+
+// getComments('comments1457027014176', (x) => {
+// 	console.log(x);
+// });
 
 const getOnePost = (postName, callback) => {
 	client.HGETALL(postName, function(err, reply){
@@ -108,6 +112,7 @@ module.exports = {
 	getOnePost: getOnePost,
 	get10Posts: get10Posts,
   getPostByName: getPostByName,
+  getComments: getComments
 };
 
 // const myPostObject = {

@@ -33,4 +33,5 @@ tinymce.init({
 		display.innerHTML += ' <br><b>Author:</b> ' + 
                           author.value.substr(0,1).toUpperCase() + 
                           author.value.substr(1);
+    author.value = author.value.substr(0,1).toUpperCase() + author.value.substr(1);
 })();
