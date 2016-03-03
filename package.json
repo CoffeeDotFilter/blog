@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/CoffeeDotFilter/blog#readme",
   "devDependencies": {
+    "env2": "^2.0.6",
     "istanbul": "^0.4.2",
     "nodemon": "^1.9.1",
     "tape": "^4.4.0"

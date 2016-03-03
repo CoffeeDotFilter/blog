@@ -9,7 +9,8 @@ const Bcrypt = require('bcrypt');
 const Basic = require('hapi-auth-basic');
 const auth = require('./auth.js');
 const redisFunctions = require('./redisFunctions.js');
-const port = process.env.PORT || 3000;
+const env = require('env2')('./config.env');
+const port = process.env.PORT;
 
 server.connection({
   port: port
@@ -75,10 +76,20 @@ server.register(plugins, (err) => {
 		config: {
 		      auth: 'simple',
 		      handler: function (request, reply) {
-		          reply.view('dashboard');
+		          reply.view('dashboard', {
+                author: request.auth.credentials.username, 
+                title: 'Admin View', 
+                link: 'https://cdn.tinymce.com/4/tinymce.min.js'
+              });
 		      }
 		  }
-	}]);
+	}, {
+    method: 'POST',
+    path: '/admindotfilter',
+    handler: (request, reply) => {
+      redisFunctions.addPostToDB(request.payload);
+    }
+  }]);
 });
 
 
