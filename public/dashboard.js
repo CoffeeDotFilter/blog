@@ -24,15 +24,14 @@ tinymce.init({
 (function() {
 		// Save date in date div, and display it in readable format
 		var date = Date.now();
-    console.log(typeof date);
 		document.getElementById('date').value = date;
 		var display = document.getElementById('display');
 		display.innerHTML = '<b>Date:</b> ' + new Date(date).toString().substr(0, 15);
 
 		// Display author's name in display div, capitalised
 		var author = document.getElementById('author');
-		display.innerHTML += ' <br><b>Author:</b> '
-											+ author.value.substr(0,1).toUpperCase()
-											+ author.value.substr(1);
-
+		display.innerHTML += ' <br><b>Author:</b> ' + 
+                          author.value.substr(0,1).toUpperCase() + 
+                          author.value.substr(1);
+    author.value = author.value.substr(0,1).toUpperCase() + author.value.substr(1);
 })();
