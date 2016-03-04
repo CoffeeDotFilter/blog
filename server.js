@@ -44,7 +44,7 @@ server.register(plugins, (err) => {
 		method: 'GET',
 		path: '/',
 		handler: (request, reply) => {
-			redisFunctions.get10Posts((data) => {
+			redisFunctions.getMultiplePosts(3, (data) => {
 				const title = 'Coffee Dot Filter Blog';
 				if (data) {
 					reply.view('home', { title: title, posts: data });
@@ -57,7 +57,7 @@ server.register(plugins, (err) => {
 		method: 'GET',
 		path: '/blog',
 		handler: (request, reply) => {
-			redisFunctions.get10Posts((data) => {
+			redisFunctions.getMultiplePosts(10, (data) => {
 				const title = 'Blog - Coffee Dot Filter Blog';
 				if (data) {
 					reply.view('blog', { title: title, posts: data });

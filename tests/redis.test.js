@@ -72,7 +72,7 @@ tape('getOnePost should get a specific post object from the db', (t) => {
 	});
 });
 
-tape('get10Posts gets 10 posts back', (t) => {
+tape('getMultiplePosts gets 10 posts back', (t) => {
 	let postObject = {
 		body: 'LOrem Ipsum is great',
 		date: 12345,
@@ -86,7 +86,7 @@ tape('get10Posts gets 10 posts back', (t) => {
 		postObject.title = postObject.title + i;
 		redisFunctions.addPostToDB(postObject);
 	}
-	redisFunctions.get10Posts((reply) => {
+	redisFunctions.getMultiplePosts(10, (reply) => {
 		t.equal(reply.length, 10, 'gets 10 posts back');
 		t.equal(reply[0].date, '12354', 'first post has correct timestamp');
 		t.equal(reply[1].date, '12353', 'second post has correct timestamp');
@@ -203,7 +203,7 @@ tape('close redis client', (t) => {
 });
 
 tape('getComments returns error in case of error', (t) => {
-	redisFunctions.get10Posts((reply) => {
+	redisFunctions.getMultiplePosts(10, (reply) => {
 		t.equal(typeof reply, 'object', 'returns error object, not array of posts');
 		t.equal(reply.command, 'ZREVRANGE', 'error object has expected property');
 		t.end();
@@ -226,8 +226,8 @@ tape('getOnePost returns error in case of error', (t) => {
 	});
 });
 
-tape('get10Posts returns error in case of error', (t) => {
-	redisFunctions.get10Posts((reply) => {
+tape('getMultiplePosts returns error in case of error', (t) => {
+	redisFunctions.getMultiplePosts(10, (reply) => {
 		t.equal(typeof reply, 'object', 'returns error object, not array of posts');
 		t.equal(reply.command, 'ZREVRANGE', 'error object has expected property');
 		t.end();

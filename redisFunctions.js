@@ -54,10 +54,8 @@ const getComments = (commentsHash, callback) => {
 
 const getOnePost = (postName, callback) => {
 	client.HGETALL(postName, function (err, reply) {
-		if (err) {
-			console.log(err);
-			return callback(err);
-		} else {
+		if (err) return callback(err);
+		else {
 			return callback(reply);
 		}
 	});
@@ -77,11 +75,9 @@ const getPostByName = (title, callback) => {
 					else {
 						if (reply === title) {
 							// if match, return entire post object in callback
-							client.HGETALL(postHash, (err, reply) => {
-								if (err) console.log(err);
-								else return callback(reply);
+							getOnePost(postHash, (data) => {
+								return callback(data);
 							});
-							return;
 						}
 					}
 				});
@@ -90,9 +86,9 @@ const getPostByName = (title, callback) => {
 	});
 };
 
-const get10Posts = (callback) => {
+const getMultiplePosts = (number, callback) => {
 	// Fetch most recent 10 posts from sorted set
-	client.ZREVRANGE('posts', 0, 9, function (error, hashNames) {
+	client.ZREVRANGE('posts', 0, number - 1, function (error, hashNames) {
 		if (error) {
 			console.log(error);
 			return callback(error);
@@ -120,7 +116,7 @@ module.exports = {
 	addPostToDB: addPostToDB,
 	addComment: addComment,
 	getOnePost: getOnePost,
-	get10Posts: get10Posts,
+	getMultiplePosts: getMultiplePosts,
 	getPostByName: getPostByName,
 	getComments: getComments
 };
