@@ -7,7 +7,7 @@
 [![Dependency Status](https://david-dm.org/CoffeeDotFilter/blog.svg)](https://david-dm.org/CoffeeDotFilter/blog)
 [![devDependency Status](https://david-dm.org/CoffeeDotFilter/blog/dev-status.svg)](https://david-dm.org/CoffeeDotFilter/blog#info=devDependencies)
 
-This is our blog using full stack JavaScript!
+This is our blog using full stack JavaScript! Available on Heroku at [https://coffeedotfilter.herokuapp.com/](https://coffeedotfilter.herokuapp.com/)
 
 ### Why?
 
