@@ -37,7 +37,9 @@ body {
 
 .content-container {
   margin: 0 auto;
-  max-width: 600px; }
+  padding: 0 4em;
+  box-sizing: border-box;
+  max-width: 780px; }
 
 /*******------------------
 Navigation -------********/
@@ -72,6 +74,8 @@ home splash -------********/
 
 .coffee-container {
   width: 50%;
+  max-width: 650px;
+  min-width: 200px;
   margin: 0 auto;
   padding: 4.9em; }
 
@@ -106,8 +110,7 @@ home splash -------********/
 /*******------------------
 posts -------********/
 .post-container {
-  margin: 3.5em auto;
-  max-width: 600px; }
+  margin: 3.5em auto; }
 
 .title {
   display: inline-block;
@@ -126,12 +129,46 @@ posts -------********/
   text-transform: capitalize; }
 
 .body {
-  margin-top: 2em; }
+  margin: 2em 0 2.9em; }
+  .body a {
+    color: #000;
+    font-weight: 700; }
+
+.see-more {
+  font-weight: 700;
+  font-size: 1.2em;
+  text-transform: capitalize;
+  color: #000; }
+
+.comment-container {
+  margin: 3em 0;
+  box-sizing: border-box;
+  background: #E8E8E8;
+  padding: 2em; }
+  .comment-container body {
+    margin: 2em 0 1em; }
+
+.comment-container:nth-child(2n) {
+  background: #F2F2F2; }
+
+input[type="text"], input[type="submit"] {
+  border: none;
+  padding: 1em;
+  outline: none;
+  border-radius: 0.4em;
+  background-color: #FFC107; }
+
+input[type="submit"] {
+  background-color: #FF9800; }
 
 /*******------------------
 footer -------********/
-footer p {
-  display: inline-block; }
+footer {
+  background: #FFC107;
+  padding: 2em;
+  margin-top: 2.5em; }
+  footer p {
+    display: inline-block; }
 
 .footer-img {
   max-width: 2em;
