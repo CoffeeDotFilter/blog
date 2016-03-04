@@ -158,6 +158,11 @@ posts -------********/
 	background: #F2F2F2;
 }
 
+// hides see more link on single post page
+.single-post .post-container .see-more {
+  display: none;
+}
+
 input[type="text"], input[type="submit"] {
 	border: none;
   padding: 1em;
