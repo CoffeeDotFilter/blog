@@ -3,28 +3,26 @@
 
 body {
   font-family: $font;
-  margin: 0;
+  margin     : 0;
 }
 
 .content-container {
-	margin: 0 auto;
-	padding: 0 4em;
-	box-sizing: border-box;
-	max-width: 780px;
+  margin    : 0 auto;
+  padding   : 0 4em;
+  box-sizing: border-box;
+  max-width : 780px;
 }
-
 /*******------------------
 Navigation -------********/
-
 nav {
   background-color: #fff;
 }
 
 .logo-div {
-  max-width: 11.6em;
+  max-width : 11.6em;
   box-sizing: border-box;
-  display: inline-block;
-  padding: 0.8em 1.8em;
+  display   : inline-block;
+  padding   : 0.8em 1.8em;
 }
 
 .logo-div-img {
@@ -32,33 +30,31 @@ nav {
 }
 
 .links {
-  float: right;
+  float     : right;
   box-sizing: border-box;
-  display: inline-block;
-  font-size: 1.5em;
-  margin: 1.9em 1em 0;
+  display   : inline-block;
+  font-size : 1.5em;
+  margin    : 1.9em 1em 0;
 
   a {
     text-decoration: none;
-    margin-left: 0.5em;
-    color: #000;
+    margin-left    : 0.5em;
+    color          : #000;
   }
 }
-
 /*******------------------
 home splash -------********/
-
 .splash-container {
   background-color: $yellow;
-  min-height: 20em;
+  min-height      : 20em;
 }
 
 .coffee-container {
-  width: 50%;
-	max-width: 650px;
-	min-width: 200px;
-  margin: 0 auto;
-  padding: 4.9em;
+  width    : 50%;
+  max-width: 650px;
+  min-width: 200px;
+  margin   : 0 auto;
+  padding  : 4.9em;
 }
 
 .cup-container {
@@ -66,11 +62,11 @@ home splash -------********/
 }
 
 .coffee-cup {
-  width: 12.66%;
+  width     : 12.66%;
   box-sizing: border-box;
-  padding: 0.6em;
-  float: left;
-  display: inline-block;
+  padding   : 0.6em;
+  float     : left;
+  display   : inline-block;
 
   img {
     width: 100%;
@@ -78,8 +74,8 @@ home splash -------********/
 }
 
 .filter-container {
-  width: 26em;
-  margin: 0 auto;
+  width       : 26em;
+  margin      : 0 auto;
   padding-left: 10em;
 
   img {
@@ -90,105 +86,99 @@ home splash -------********/
 .left-bracket,
 .right-bracket {
   display: inline-block;
-  width: 8%;
-  float: left;
+  width  : 8%;
+  float  : left;
 
   img {
     width: 100%;
   }
 }
-
 /*******------------------
 posts -------********/
-
 .post-container {
   margin: 3.5em auto;
 }
 
 .title {
-  display: inline-block;
+  display       : inline-block;
   text-transform: uppercase;
-  font-size: 1.4em;
-  margin-bottom: 0.4em;
+  font-size     : 1.4em;
+  margin-bottom : 0.4em;
 }
 
 .date {
-  display: inline-block;
-  float: right;
-  font-size: 1em;
+  display    : inline-block;
+  float      : right;
+  font-size  : 1em;
   margin-left: 1.2em;
 }
 
 .author {
-  font-size: 1em;
+  font-size     : 1em;
   text-transform: capitalize;
 }
-
 
 .body {
   margin: 2em 0 2.9em;
 
-	a {
-		// text-decoration: none;
-		color: #000;
-		font-weight: 700;
-	}
+  a {
+    // text-decoration: none;
+    color      : #000;
+    font-weight: 700;
+  }
 }
 
 .see-more {
-	font-weight: 700;
-  font-size: 1.2em;
+  font-weight   : 700;
+  font-size     : 1.2em;
   text-transform: capitalize;
-  color: #000;
-
+  color         : #000;
 }
 
 .comment-container {
-	margin: 3em 0;
+  margin    : 3em 0;
   box-sizing: border-box;
   background: #E8E8E8;
-  padding: 2em;
+  padding   : 2em;
 
-	body {
-		margin: 2em 0 1em;
-	}
+  body {
+    margin: 2em 0 1em;
+  }
 }
 
 .comment-container:nth-child(2n) {
-	background: #F2F2F2;
+  background: #F2F2F2;
 }
-
 // hides see more link on single post page
 .single-post .post-container .see-more {
   display: none;
 }
 
-input[type="text"], input[type="submit"] {
-	border: none;
-  padding: 1em;
-	outline: none;
-  border-radius: 0.4em;
+input[type="text"],
+input[type="submit"] {
+  border          : none;
+  padding         : 1em;
+  outline         : none;
+  border-radius   : 0.4em;
   background-color: #FFC107;
 }
 
 input[type="submit"] {
-	background-color: #FF9800;
+  background-color: #FF9800;
 }
-
 /*******------------------
 footer -------********/
-
 footer {
-	background: #FFC107;
-	padding: 2em;
-	margin-top: 2.5em;
+  background: #FFC107;
+  padding   : 2em;
+  margin-top: 2.5em;
 
-	p {
-		display: inline-block;
-	}
+  p {
+    display: inline-block;
+  }
 }
 
 .footer-img {
   max-width: 2em;
-  margin: 0 1.5em;
+  margin   : 0 1.5em;
 }
