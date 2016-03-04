@@ -28,10 +28,10 @@ tinymce.init({
 		var display = document.getElementById('display');
 		display.innerHTML = '<b>Date:</b> ' + new Date(date).toString().substr(0, 15);
 
-		// Display author's name in display div, capitalised
+		// Display author's name in display div, capitalised, and put name in 
+    // author input for form submission
 		var author = document.getElementById('author');
-		display.innerHTML += ' <br><b>Author:</b> ' + 
-                          author.value.substr(0,1).toUpperCase() + 
-                          author.value.substr(1);
-    author.value = author.value.substr(0,1).toUpperCase() + author.value.substr(1);
+    var capitalisedAuthor = author.value.substr(0,1).toUpperCase() + author.value.substr(1).toLowerCase();
+		display.innerHTML += ' <br><b>Author:</b> ' + capitalisedAuthor;                    
+    author.value = capitalisedAuthor;
 })();

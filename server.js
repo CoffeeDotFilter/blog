@@ -37,7 +37,7 @@ server.register(plugins, (err) => {
 		layout: 'default',
 		layoutPath: 'views/layout',
     helpersPath: 'views/helpers',
-    partialsPath: 'views/partials',
+    partialsPath: 'views/partials'
 	});
 
 	server.route([{
@@ -45,10 +45,11 @@ server.register(plugins, (err) => {
 	  path: '/',
 	  handler: (request, reply) => {
       redisFunctions.get10Posts((data) => {
+        const title = 'Coffee Dot Filter Blog';
         if (data) {
-          reply.view('home', {title: 'Coffee Dot Filter Blog', posts: data});
+          reply.view('home', {title: title, posts: data});
         } else {
-          reply.view('home', {title: 'Home - Coffee Dot Filter Blog'});
+          reply.view('home', {title: title});
         }
       });
 	  }
@@ -57,10 +58,11 @@ server.register(plugins, (err) => {
     path: '/blog',
     handler: (request, reply) => {
       redisFunctions.get10Posts((data) => {
+        const title = 'Blog - Coffee Dot Filter Blog';
         if (data) {
-          reply.view('blog', {title: 'Blog - Coffee Dot Filter Blog', posts: data});
+          reply.view('blog', {title: title, posts: data});
         } else {
-          reply.view('blog', {title: 'Blog - Coffee Dot Filter Blog'});
+          reply.view('blog', {title: title});
         }
       });
     }
@@ -88,7 +90,6 @@ server.register(plugins, (err) => {
 		config: {
 		      auth: 'simple',
 		      handler: function (request, reply) {
-            console.log(request.auth);
 		          reply.view('dashboard', {
                 author: request.auth.credentials.username,
                 title: 'Admin View',
