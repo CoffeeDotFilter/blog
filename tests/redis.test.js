@@ -123,7 +123,7 @@ tape('check that server responds', (t) => {
 	});
 });
 
-tape('check that server returns index for ' / ' request', (t) => {
+tape('check that server returns index for "/" request', (t) => {
 	server.init.inject({ method: 'GET', url: '/' }, (response) => {
 		t.ok(response.payload.indexOf('Welcome to Coffee.filter()'), 'server returns index page');
 		t.end();
@@ -175,25 +175,26 @@ tape('check that comment post request works', (t) => {
 	}, (response) => {
 		t.equal(response.raw.res.statusCode, 302, 'response should redirect');
 		t.equal(response.raw.res._headers.location, '/blog/Our-5th-post0', 'redirect location should be same page');
+		client.flushdb();
 		t.end();
 	});
 });
 
-// tape('check that server returns correct page for "/blog" request with empty database', (t) => {
-// 	server.init.inject({method: 'GET', url: '/blog'}, (response) => {
-// 		t.ok(response.payload.indexOf('<title>Blog - Coffee Dot Filter Blog</title>'), 'server returns blog home page');
-// 		t.notOk(response.payload.indexOf('LOrem Ipsum is great'), 'blog page does not contain blog post');
-// 		t.end();
-// 	});
-// });
+tape('check that server returns correct page for "/blog" request with empty database', (t) => {
+	server.init.inject({method: 'GET', url: '/blog'}, (response) => {
+		t.ok(response.payload.indexOf('<title>Blog - Coffee Dot Filter Blog</title>'), 'server returns blog home page');
+		t.equal(response.payload.indexOf('LOrem Ipsum is great'), -1, 'blog page does not contain blog post');
+		t.end();
+	});
+});
 
-// tape('check that server returns index for '/' request with empty database', (t) => {
-// 	server.init.inject({method: 'GET', url: '/'}, (response) => {
-// 		t.ok(response.payload.indexOf('Welcome to Coffee.filter()'), 'server returns index page');
-// 		t.notOk(response.payload.indexOf('LOrem Ipsum is great'), 'blog page does not contain blog post');
-// 		t.end();
-// 	});
-// });
+tape('check that server returns index for "/" request with empty database', (t) => {
+	server.init.inject({method: 'GET', url: '/'}, (response) => {
+		t.ok(response.payload.indexOf('Welcome to Coffee.filter()'), 'server returns index page');
+		t.equal(response.payload.indexOf('LOrem Ipsum is great'), -1, 'blog page does not contain blog post');
+		t.end();
+	});
+});
 
 tape('close redis client', (t) => {
 	client.flushdb();
