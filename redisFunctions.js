@@ -32,7 +32,7 @@ const addPostToDB = (postObject) => {
 const addComment = (commentObj, date) => {
 	// Stringify object and remove nefarious script injections, and format for markdown
 	const stringifiedObj = JSON.stringify(commentObj)
-		.replace(/</g, "we h8").replace(/>/g, "hackers")
+		.replace(/<[^<>]+>/g, 'we h8 hackers')
 		.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
 		.replace(/\*([^*]+)\*/g, '<em>$1</em>');
 	const commentName = 'comments' + date;
