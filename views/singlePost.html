@@ -1,18 +1,18 @@
 {{>navigation}}
-	<div class="content-container single-post">
-		{{>posts post}}
-		<div id="comment">
-			<h4>Leave a comment!</h4>
-			<form method="post" id="form">
-				<input type="text" name="author" placeholder="Your name" id="author"></input>
-				<input type="text" name="body" placeholder="Your message" id="body"></input>
-				<input type="text" style="display:none" name="date" value= "{{date}}"id="date"></input>
-				<input type="submit"></input>
-			</form>
-		</div>
-		{{#each comments}}
-			{{>comments this}}
-		{{/each}}
-	</div>
+<div class="content-container single-post">
+  {{>posts post}}
+  <div id="comment">
+    <h4>Leave a comment!</h4>
+    <form method="post" id="form">
+      <input type="text" name="author" placeholder="Your name" id="author"></input>
+      <input type="text" name="body" placeholder="Your message" id="body"></input>
+      <input type="text" style="display:none" name="date" value="{{date}}" id="date"></input>
+      <input type="submit"></input>
+    </form>
+  </div>
+  {{#each comments}}
+    {{>comments this}}
+  {{/each}}
+</div>
 
 {{>footer}}

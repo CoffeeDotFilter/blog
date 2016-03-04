@@ -5,7 +5,7 @@ const redisFunctions = require('../redisFunctions.js');
 const server = require('../server.js');
 let client = redisFunctions.client;
 
-client.select(3, function() {
+client.select(3, function () {
 	'connected to db3';
 });
 
@@ -117,21 +117,21 @@ tape('getComments returns array of comments for particular post', (t) => {
 
 // Server tests........
 tape('check that server responds', (t) => {
-  server.init.inject({method: 'GET', url: '/'}, (response) => {
-    t.equal(response.statusCode, 200,'Response "200" received from server');
-    t.end();
-  });
+	server.init.inject({ method: 'GET', url: '/' }, (response) => {
+		t.equal(response.statusCode, 200, 'Response "200" received from server');
+		t.end();
+	});
 });
 
-tape('check that server returns index for '/' request', (t) => {
-	server.init.inject({method: 'GET', url: '/'}, (response) => {
+tape('check that server returns index for ' / ' request', (t) => {
+	server.init.inject({ method: 'GET', url: '/' }, (response) => {
 		t.ok(response.payload.indexOf('Welcome to Coffee.filter()'), 'server returns index page');
 		t.end();
 	});
 });
 
 tape('check that server returns correct page for "/blog" request', (t) => {
-	server.init.inject({method: 'GET', url: '/blog'}, (response) => {
+	server.init.inject({ method: 'GET', url: '/blog' }, (response) => {
 		t.ok(response.payload.indexOf('<title>Blog - Coffee Dot Filter Blog</title>'), 'server returns blog home page');
 		t.ok(response.payload.indexOf('LOrem Ipsum is great'), 'blog page contains blog post');
 		t.end();
@@ -139,7 +139,7 @@ tape('check that server returns correct page for "/blog" request', (t) => {
 });
 
 tape('check that blog page contains first blog', (t) => {
-	server.init.inject({method: 'GET', url: '/blog/Our-5th-post0'}, (response) => {
+	server.init.inject({ method: 'GET', url: '/blog/Our-5th-post0' }, (response) => {
 		t.ok(response.payload.indexOf('LOrem Ipsum is great'), 'blog page includes post');
 		t.ok(response.payload.indexOf('this post is rubbish'), 'blog page includes comments');
 		t.end();
@@ -148,13 +148,13 @@ tape('check that blog page contains first blog', (t) => {
 
 tape('check that post request from admin page works', (t) => {
 	server.init.inject({
-		method: 'POST', 
+		method: 'POST',
 		url: '/admindotfilter',
 		payload: 'body="stuff"',
-  		headers: {
-		    'Content-Type': 'application/x-www-form-urlencoded',
-		    'Content-Length': '12'
-  		}
+		headers: {
+			'Content-Type': 'application/x-www-form-urlencoded',
+			'Content-Length': '12'
+		}
 	}, (response) => {
 		console.log(response.raw.res);
 		t.equal(response.raw.res.statusCode, 302, 'response should redirect');
@@ -165,13 +165,13 @@ tape('check that post request from admin page works', (t) => {
 
 tape('check that comment post request works', (t) => {
 	server.init.inject({
-		method: 'POST', 
+		method: 'POST',
 		url: '/blog/Our-5th-post0',
 		payload: 'body=foobarfoobar&date=12345&author=me',
-  		headers: {
-		    'Content-Type': 'application/x-www-form-urlencoded',
-		    'Content-Length': '12'
-  		}
+		headers: {
+			'Content-Type': 'application/x-www-form-urlencoded',
+			'Content-Length': '12'
+		}
 	}, (response) => {
 		t.equal(response.raw.res.statusCode, 302, 'response should redirect');
 		t.equal(response.raw.res._headers.location, '/blog/Our-5th-post0', 'redirect location should be same page');
@@ -237,4 +237,3 @@ tape('close redis client', (t) => {
 	server.init.stop();
 	t.end();
 });
-

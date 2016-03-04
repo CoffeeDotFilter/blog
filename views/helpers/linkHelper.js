@@ -1,3 +1,3 @@
-module.exports = function(title) {
-  return title.split(' ').join('-');
+module.exports = function (title) {
+	return title.split(' ').join('-');
 };

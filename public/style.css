@@ -154,7 +154,8 @@ posts -------********/
 .single-post .post-container .see-more {
   display: none; }
 
-input[type="text"], input[type="submit"] {
+input[type="text"],
+input[type="submit"] {
   border: none;
   padding: 1em;
   outline: none;
