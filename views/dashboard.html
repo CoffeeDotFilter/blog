@@ -1,12 +1,14 @@
-<h1>Admin Dashboard</h1>
-
-<form method="post" id="form">
-	<input type="text" style="display:none" value="{{author}}" name="author" id="author">
-	<input type="text" placeholder="Title" name="title" required>
-	<input type="text" placeholder="Image link" name="picture" required>
-	<input type="text" style="display:none" name="date" id="date">
-	<div id="display"></div>
-	<textarea id="tiny" form="form" name="body">Hello World</textarea>
-	<button id='button'>SUBMIT</button>
-</form>
+{{>navigation}}
+<div class="content-container">
+	<h1>Admin Dashboard</h1>
+	<form method="post" id="form">
+		<input type="text" style="display:none" value="{{author}}" name="author" id="author">
+		<input type="text" placeholder="Title" name="title" required>
+		<input type="text" placeholder="Image link" name="picture" required>
+		<input type="text" style="display:none" name="date" id="date">
+		<div id="display"></div>
+		<textarea id="tiny" form="form" name="body">Hello World</textarea>
+		<button id='button'>SUBMIT</button>
+	</form>
+</div>
 <script src="dashboard.js" type="text/javascript"></script>
