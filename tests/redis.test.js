@@ -72,7 +72,7 @@ tape('getOnePost should get a specific post object from the db', (t) => {
 	});
 });
 
-tape('get10Posts gets 10 posts back', (t) => {
+tape('getMultiplePosts gets 10 posts back', (t) => {
 	let postObject = {
 		body: 'LOrem Ipsum is great',
 		date: 12345,
@@ -86,7 +86,7 @@ tape('get10Posts gets 10 posts back', (t) => {
 		postObject.title = postObject.title + i;
 		redisFunctions.addPostToDB(postObject);
 	}
-	redisFunctions.get10Posts((reply) => {
+	redisFunctions.getMultiplePosts(10, (reply) => {
 		t.equal(reply.length, 10, 'gets 10 posts back');
 		t.equal(reply[0].date, '12354', 'first post has correct timestamp');
 		t.equal(reply[1].date, '12353', 'second post has correct timestamp');
@@ -123,7 +123,7 @@ tape('check that server responds', (t) => {
 	});
 });
 
-tape('check that server returns index for ' / ' request', (t) => {
+tape('check that server returns index for "/" request', (t) => {
 	server.init.inject({ method: 'GET', url: '/' }, (response) => {
 		t.ok(response.payload.indexOf('Welcome to Coffee.filter()'), 'server returns index page');
 		t.end();
@@ -175,25 +175,26 @@ tape('check that comment post request works', (t) => {
 	}, (response) => {
 		t.equal(response.raw.res.statusCode, 302, 'response should redirect');
 		t.equal(response.raw.res._headers.location, '/blog/Our-5th-post0', 'redirect location should be same page');
+		client.flushdb();
 		t.end();
 	});
 });
 
-// tape('check that server returns correct page for "/blog" request with empty database', (t) => {
-// 	server.init.inject({method: 'GET', url: '/blog'}, (response) => {
-// 		t.ok(response.payload.indexOf('<title>Blog - Coffee Dot Filter Blog</title>'), 'server returns blog home page');
-// 		t.notOk(response.payload.indexOf('LOrem Ipsum is great'), 'blog page does not contain blog post');
-// 		t.end();
-// 	});
-// });
+tape('check that server returns correct page for "/blog" request with empty database', (t) => {
+	server.init.inject({method: 'GET', url: '/blog'}, (response) => {
+		t.ok(response.payload.indexOf('<title>Blog - Coffee Dot Filter Blog</title>'), 'server returns blog home page');
+		t.equal(response.payload.indexOf('LOrem Ipsum is great'), -1, 'blog page does not contain blog post');
+		t.end();
+	});
+});
 
-// tape('check that server returns index for '/' request with empty database', (t) => {
-// 	server.init.inject({method: 'GET', url: '/'}, (response) => {
-// 		t.ok(response.payload.indexOf('Welcome to Coffee.filter()'), 'server returns index page');
-// 		t.notOk(response.payload.indexOf('LOrem Ipsum is great'), 'blog page does not contain blog post');
-// 		t.end();
-// 	});
-// });
+tape('check that server returns index for "/" request with empty database', (t) => {
+	server.init.inject({method: 'GET', url: '/'}, (response) => {
+		t.ok(response.payload.indexOf('Welcome to Coffee.filter()'), 'server returns index page');
+		t.equal(response.payload.indexOf('LOrem Ipsum is great'), -1, 'blog page does not contain blog post');
+		t.end();
+	});
+});
 
 tape('close redis client', (t) => {
 	client.flushdb();
@@ -202,7 +203,7 @@ tape('close redis client', (t) => {
 });
 
 tape('getComments returns error in case of error', (t) => {
-	redisFunctions.get10Posts((reply) => {
+	redisFunctions.getMultiplePosts(10, (reply) => {
 		t.equal(typeof reply, 'object', 'returns error object, not array of posts');
 		t.equal(reply.command, 'ZREVRANGE', 'error object has expected property');
 		t.end();
@@ -225,8 +226,8 @@ tape('getOnePost returns error in case of error', (t) => {
 	});
 });
 
-tape('get10Posts returns error in case of error', (t) => {
-	redisFunctions.get10Posts((reply) => {
+tape('getMultiplePosts returns error in case of error', (t) => {
+	redisFunctions.getMultiplePosts(10, (reply) => {
 		t.equal(typeof reply, 'object', 'returns error object, not array of posts');
 		t.equal(reply.command, 'ZREVRANGE', 'error object has expected property');
 		t.end();
