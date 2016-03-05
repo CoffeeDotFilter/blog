@@ -1,8 +1,8 @@
 "use strict";
 
 const tape = require('tape');
-const redisFunctions = require('../redisFunctions.js');
-const server = require('../server.js');
+const redisFunctions = require('../lib/redisFunctions.js');
+const server = require('../lib/server.js');
 let client = redisFunctions.client;
 
 client.select(3, function () {
