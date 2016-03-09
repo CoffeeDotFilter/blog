@@ -1,6 +1,5 @@
 const tape = require('tape');
-const server = require('../server.js');
-const fs = require('fs');
+const server = require('../lib/server.js');
 
 tape('check that tests work!', (t) => {
 	t.equal(1, 1, 'success!');

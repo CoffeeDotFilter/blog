@@ -32,7 +32,7 @@
   100% {
     transform: translateY(0px); } }
 body {
-  font-family: Roboto Condensed;
+  font-family: Roboto Condensed, Roboto, Lato, Helvetica;
   margin: 0; }
 
 .content-container {

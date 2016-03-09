@@ -8,7 +8,7 @@
   "main": "server.js",
   "scripts": {
     "test": "tape ./tests/*",
-    "start": "nodemon server.js",
+    "start": "nodemon ./lib/server.js",
     "sass": "sass --watch public/scss/style.scss:public/style.css",
     "coverage": "istanbul cover tape ./tests/* && ./node_modules/.bin/codecov"
   },
