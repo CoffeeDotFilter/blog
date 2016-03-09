@@ -35,3 +35,4 @@ node_modules
 .sass-cache
 dump.rdb
 config.env
+.DS_Store
